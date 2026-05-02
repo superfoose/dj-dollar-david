@@ -682,13 +682,25 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
     }
 });
 
-// ===== PARALLAX ON MOUSE MOVE =====
+// ===== 3D CONTROLLER TILT ON MOUSE MOVE =====
+const rig = document.querySelector('.controller-rig');
 document.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 20;
-    const y = (e.clientY / window.innerHeight - 0.5) * 20;
+    if (!rig) return;
+    const x = (e.clientX / window.innerWidth - 0.5);   // -0.5 to 0.5
+    const y = (e.clientY / window.innerHeight - 0.5);  // -0.5 to 0.5
 
-    const helmet = document.querySelector('.helmet');
-    if (helmet) {
-        helmet.style.transform = `translateY(${-10 + y * 0.3}px) rotateX(${-y * 0.5}deg) rotateY(${x * 0.5}deg)`;
+    const baseX = 28;
+    const tiltX = baseX - y * 8;   // tilt forward/back slightly
+    const tiltY = x * 6;           // rotate left/right
+
+    rig.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+    rig.style.transition = 'transform 0.15s ease-out';
+});
+
+// Reset on mouse leave
+document.addEventListener('mouseleave', () => {
+    if (rig) {
+        rig.style.transform = 'rotateX(28deg) rotateY(0deg)';
+        rig.style.transition = 'transform 0.6s ease';
     }
 });

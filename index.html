@@ -26,128 +26,151 @@
 
     <section id="hero">
         <div class="hero-content">
-            <!-- ===== FUTURISTIC DJ SET ===== -->
-            <div class="djset">
 
-                <!-- LEFT DECK -->
-                <div class="deck deck-left">
-                    <div class="deck-screen">
-                        <canvas class="deck-wave" id="waveLeft"></canvas>
-                        <div class="deck-bpm">128 BPM</div>
-                    </div>
-                    <div class="platter">
-                        <div class="platter-vinyl">
-                            <div class="platter-label">
-                                <span>A</span>
-                            </div>
-                        </div>
-                        <div class="platter-ring"></div>
-                    </div>
-                    <div class="deck-controls">
-                        <div class="knob knob-sm"></div>
-                        <div class="knob knob-sm"></div>
-                        <div class="knob knob-sm"></div>
-                        <div class="play-pause active"></div>
-                    </div>
-                </div>
+            <!-- ===== FULL CONTROLLER HERO ===== -->
+            <div class="controller-rig-perspective">
+            <div class="controller-rig">
 
-                <!-- CENTER MIXER -->
-                <div class="mixer">
-                    <div class="mixer-top">
+                <!-- TOP DISPLAY BAR -->
+                <div class="rig-topbar">
+                    <div class="rig-led-strip" id="ledStrip"></div>
+                    <div class="rig-title">
+                        <h1 class="logo-title">
+                            <span class="dollar-d">D</span>J&nbsp;<span class="dollar-d">D</span>OLLAR&nbsp;<span class="dollar-d">D</span>AVI<span class="dollar-d">D</span>
+                        </h1>
+                        <p class="tagline">EXPERIENCE MUSIC A WAY YOU NEVER FELT BEFORE</p>
+                    </div>
+                    <div class="rig-visor-wrap">
                         <div class="visor-screen">
                             <div class="visor-text" id="visorText"></div>
                         </div>
                     </div>
-                    <div class="mixer-eq">
-                        <div class="eq-col">
-                            <div class="knob knob-md"></div>
-                            <div class="knob knob-md"></div>
-                            <div class="knob knob-md"></div>
-                            <span class="eq-label">A</span>
+                </div>
+
+                <!-- MAIN CONTROLLER BODY -->
+                <div class="rig-body">
+
+                    <!-- LEFT DECK -->
+                    <div class="deck deck-left">
+                        <div class="deck-screen">
+                            <canvas class="deck-wave" id="waveLeft"></canvas>
+                            <div class="deck-bpm">128 BPM</div>
                         </div>
-                        <div class="eq-col">
-                            <div class="fader-track">
-                                <div class="fader-cap" style="top:20%"></div>
+                        <div class="platter">
+                            <div class="platter-vinyl">
+                                <div class="platter-label"><span>A</span></div>
                             </div>
+                            <div class="platter-ring"></div>
                         </div>
-                        <div class="eq-col eq-mid">
-                            <div class="led-row">
-                                <span class="led on"></span><span class="led on"></span>
-                                <span class="led on"></span><span class="led"></span>
-                                <span class="led"></span>
-                            </div>
-                            <div class="knob knob-lg master-knob"></div>
-                            <div class="led-row">
-                                <span class="led on"></span><span class="led on"></span>
-                                <span class="led on"></span><span class="led on"></span>
-                                <span class="led"></span>
-                            </div>
-                        </div>
-                        <div class="eq-col">
-                            <div class="fader-track">
-                                <div class="fader-cap" style="top:50%"></div>
-                            </div>
-                        </div>
-                        <div class="eq-col">
-                            <div class="knob knob-md"></div>
-                            <div class="knob knob-md"></div>
-                            <div class="knob knob-md"></div>
-                            <span class="eq-label">B</span>
+                        <div class="deck-controls">
+                            <div class="knob knob-sm"></div>
+                            <div class="knob knob-sm"></div>
+                            <div class="knob knob-sm"></div>
+                            <div class="play-pause active"></div>
                         </div>
                     </div>
-                    <div class="crossfader-wrap">
-                        <div class="crossfader-track">
-                            <div class="crossfader-cap"></div>
+
+                    <!-- CENTER MIXER -->
+                    <div class="mixer">
+                        <div class="mixer-eq">
+                            <div class="eq-col">
+                                <div class="knob knob-md"></div>
+                                <div class="knob knob-md"></div>
+                                <div class="knob knob-md"></div>
+                                <span class="eq-label">A</span>
+                            </div>
+                            <div class="eq-col">
+                                <div class="fader-track">
+                                    <div class="fader-cap" style="top:20%"></div>
+                                </div>
+                            </div>
+                            <div class="eq-col eq-mid">
+                                <div class="led-row">
+                                    <span class="led on"></span><span class="led on"></span>
+                                    <span class="led on"></span><span class="led"></span>
+                                    <span class="led"></span>
+                                </div>
+                                <div class="knob knob-lg master-knob"></div>
+                                <div class="led-row">
+                                    <span class="led on"></span><span class="led on"></span>
+                                    <span class="led on"></span><span class="led on"></span>
+                                    <span class="led"></span>
+                                </div>
+                            </div>
+                            <div class="eq-col">
+                                <div class="fader-track">
+                                    <div class="fader-cap" style="top:50%"></div>
+                                </div>
+                            </div>
+                            <div class="eq-col">
+                                <div class="knob knob-md"></div>
+                                <div class="knob knob-md"></div>
+                                <div class="knob knob-md"></div>
+                                <span class="eq-label">B</span>
+                            </div>
+                        </div>
+                        <div class="crossfader-wrap">
+                            <div class="crossfader-track">
+                                <div class="crossfader-cap"></div>
+                            </div>
+                        </div>
+                        <div class="mixer-btns">
+                            <div class="pad pad-cyan"></div>
+                            <div class="pad pad-magenta"></div>
+                            <div class="pad pad-gold"></div>
+                            <div class="pad pad-cyan"></div>
                         </div>
                     </div>
-                    <div class="mixer-btns">
+
+                    <!-- RIGHT DECK -->
+                    <div class="deck deck-right">
+                        <div class="deck-screen">
+                            <canvas class="deck-wave" id="waveRight"></canvas>
+                            <div class="deck-bpm">132 BPM</div>
+                        </div>
+                        <div class="platter">
+                            <div class="platter-vinyl">
+                                <div class="platter-label"><span>B</span></div>
+                            </div>
+                            <div class="platter-ring"></div>
+                        </div>
+                        <div class="deck-controls">
+                            <div class="knob knob-sm"></div>
+                            <div class="knob knob-sm"></div>
+                            <div class="knob knob-sm"></div>
+                            <div class="play-pause"></div>
+                        </div>
+                    </div>
+
+                </div><!-- end rig-body -->
+
+                <!-- BOTTOM BUTTON STRIP -->
+                <div class="rig-bottom">
+                    <div class="rig-pads">
                         <div class="pad pad-cyan"></div>
                         <div class="pad pad-magenta"></div>
                         <div class="pad pad-gold"></div>
                         <div class="pad pad-cyan"></div>
+                        <div class="pad pad-magenta"></div>
+                        <div class="pad pad-gold"></div>
+                        <div class="pad pad-cyan"></div>
+                        <div class="pad pad-magenta"></div>
                     </div>
-                </div>
+                    <div class="rig-cta">
+                        <a href="#booking" class="btn btn-primary">
+                            <span class="btn-text">BOOK NOW</span>
+                            <span class="btn-glitch" aria-hidden="true">BOOK NOW</span>
+                        </a>
+                        <a href="#contact" class="btn btn-secondary">
+                            <span class="btn-text">GET IN TOUCH</span>
+                        </a>
+                    </div><!-- end rig-cta -->
+                </div><!-- end rig-bottom -->
 
-                <!-- RIGHT DECK -->
-                <div class="deck deck-right">
-                    <div class="deck-screen">
-                        <canvas class="deck-wave" id="waveRight"></canvas>
-                        <div class="deck-bpm">132 BPM</div>
-                    </div>
-                    <div class="platter">
-                        <div class="platter-vinyl">
-                            <div class="platter-label">
-                                <span>B</span>
-                            </div>
-                        </div>
-                        <div class="platter-ring"></div>
-                    </div>
-                    <div class="deck-controls">
-                        <div class="knob knob-sm"></div>
-                        <div class="knob knob-sm"></div>
-                        <div class="knob knob-sm"></div>
-                        <div class="play-pause"></div>
-                    </div>
-                </div>
+            </div><!-- end controller-rig -->
+            </div><!-- end controller-rig-perspective -->
 
-            </div>
-            <!-- ===== END DJ SET ===== -->
-            <h1 class="logo-title">
-                <span class="dollar-d">D</span>J
-                <span class="dollar-d">D</span>OLLAR
-                <span class="dollar-d">D</span>AVI<span class="dollar-d">D</span>
-            </h1>
-            <p class="tagline">EXPERIENCE MUSIC A WAY YOU NEVER FELT BEFORE</p>
-            <div class="cta-buttons">
-                <a href="#booking" class="btn btn-primary">
-                    <span class="btn-text">BOOK NOW</span>
-                    <span class="btn-glitch" aria-hidden="true">BOOK NOW</span>
-                </a>
-                <a href="#contact" class="btn btn-secondary">
-                    <span class="btn-text">GET IN TOUCH</span>
-                </a>
-            </div>
-        </div>
+        </div><!-- end hero-content -->
         <div class="scroll-indicator">
             <div class="scroll-arrow"></div>
         </div>
