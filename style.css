@@ -2075,45 +2075,185 @@ body::after {
     z-index: 9999;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ============================================
+   MOBILE — full overhaul
+   ============================================ */
 @media (max-width: 768px) {
-    .about-grid,
-    .contact-grid {
+
+    /* Basics */
+    body { cursor: auto; }
+    .cursor-glow { display: none; }
+
+    /* ----- NAVBAR ----- */
+    #navbar {
+        padding: 0.8rem 1.2rem;
+    }
+    .nav-links { display: none; }
+    .nav-logo {
+        font-size: 1.4rem;
+    }
+
+    /* ----- HERO ----- */
+    #hero {
+        padding: 80px 8px 40px;
+        min-height: auto;
+    }
+
+    /* Scale the whole 3D rig to fit on phone */
+    .controller-rig-perspective {
+        perspective: 600px;
+        width: 100%;
+    }
+
+    .controller-rig {
+        width: 100%;
+        padding: 10px 8px 12px;
+        transform: rotateX(16deg) rotateY(0deg) !important;
+        animation: rig-float-mobile 4s ease-in-out infinite !important;
+    }
+
+    @keyframes rig-float-mobile {
+        0%, 100% { transform: rotateX(16deg) translateY(0) !important; }
+        50%       { transform: rotateX(14deg) translateY(-4px) !important; }
+    }
+
+    /* Top bar: stack title + visor vertically */
+    .rig-topbar {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-bottom: 10px;
+    }
+    .rig-led-strip { display: none; }
+    .rig-title .logo-title {
+        font-size: clamp(1.1rem, 7vw, 1.8rem);
+        letter-spacing: 2px;
+    }
+    .rig-title .tagline {
+        font-size: 0.5rem;
+        letter-spacing: 2px;
+    }
+    .rig-visor-wrap .visor-screen {
+        height: 28px;
+    }
+
+    /* Rig body — decks + mixer */
+    .rig-body {
+        gap: 0;
+        width: 100%;
+        align-items: stretch;
+    }
+
+    /* Shrink decks significantly */
+    .deck {
+        width: clamp(80px, 26vw, 130px);
+        padding: 6px 4px 8px;
+        gap: 6px;
+    }
+
+    .deck-screen { height: 35px; }
+    .deck-bpm { font-size: 0.4rem; }
+
+    .platter {
+        width: clamp(70px, 22vw, 110px);
+        height: clamp(70px, 22vw, 110px);
+    }
+    .platter-vinyl {
+        width: calc(100% - 10px);
+        height: calc(100% - 10px);
+    }
+    .platter-label {
+        width: 28px;
+        height: 28px;
+        font-size: 0.7rem;
+    }
+
+    .deck-controls { gap: 4px; padding: 0 2px; }
+    .knob-sm { width: 14px; height: 14px; }
+    .play-pause { width: 16px; height: 16px; }
+
+    /* Shrink mixer */
+    .mixer {
+        width: clamp(100px, 30vw, 160px);
+        padding: 6px 6px 8px;
+        gap: 6px;
+    }
+    .knob-md { width: 18px; height: 18px; }
+    .knob-lg { width: 32px; height: 32px; }
+    .fader-track { height: 55px; }
+    .led { width: 5px; height: 5px; }
+    .mixer-eq { gap: 4px; }
+    .mixer-btns { gap: 4px; }
+    .pad { height: 14px; }
+    .crossfader-cap { width: 16px; height: 10px; }
+    .eq-label { font-size: 0.45rem; }
+
+    /* Bottom strip */
+    .rig-bottom {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .rig-pads { gap: 4px; }
+    .rig-pads .pad { height: 22px; }
+    .rig-cta {
+        width: 100%;
+        flex-direction: column;
+        gap: 8px;
+    }
+    .rig-cta .btn {
+        width: 100%;
+        text-align: center;
+        padding: 0.8rem 1rem;
+        font-size: 0.75rem;
+    }
+
+    /* ----- ABOUT ----- */
+    .about-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-
-    .nav-links {
-        display: none;
+    .turntable {
+        width: 200px;
+        height: 200px;
     }
-
-    #navbar {
-        padding: 1rem 1.5rem;
+    .vinyl {
+        width: 180px;
+        height: 180px;
     }
-
     .stats {
         justify-content: center;
+        gap: 1.5rem;
     }
+    .stat-number { font-size: 1.8rem; }
 
-    .event-card {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
+    /* ----- BOOKING ----- */
+    .booking-phone-number {
+        padding: 1.2rem 1.5rem;
+        clip-path: none;
+        border-radius: 8px;
     }
-
-    .social-link::before {
-        position: static;
+    .phone-digits {
+        font-size: clamp(1.4rem, 8vw, 2.5rem);
+        letter-spacing: 3px;
     }
-
-    .social-link {
+    .booking-whatsapp {
+        clip-path: none;
+        border-radius: 8px;
         justify-content: center;
     }
 
-    body {
-        cursor: auto;
+    /* ----- CONTACT ----- */
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
     }
+    .social-link { justify-content: center; }
+    .social-link::before { position: static; }
 
-    .cursor-glow {
-        display: none;
-    }
+    /* ----- SECTION TITLES ----- */
+    .section-title { font-size: clamp(1.6rem, 8vw, 2.5rem); margin-bottom: 2.5rem; }
+    .section-title::before { font-size: clamp(3rem, 16vw, 6rem); }
+
+    /* ----- FOOTER ----- */
+    .footer-logo { font-size: 1rem; letter-spacing: 2px; }
 }
