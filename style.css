@@ -2089,7 +2089,7 @@ body::after {
     #hero {
         min-height: 100svh;
         min-height: -webkit-fill-available;
-        padding: 75px 12px 32px;
+        padding: 70px 0 24px;
         overflow: visible;
     }
 
@@ -2108,140 +2108,51 @@ body::after {
         align-items: center;
     }
 
-    /* ---- 3D RIG: kill perspective on iPhone Safari
-           (Safari 3D + overflow causes blank renders)
-           Use a simple top shadow to fake depth instead ---- */
+    /* ---- CONTROLLER: scale the whole rig to fit the phone ----
+       The rig is designed at ~600px wide. On a 375px phone
+       we scale it to ~60% so everything stays proportional
+       and nothing gets cut off. ---- */
     .controller-rig-perspective {
         perspective: none !important;
         overflow: visible;
         width: 100%;
-        padding-bottom: 0;
+        /* reserve vertical space = scaled height */
+        display: flex;
+        justify-content: center;
     }
 
     .controller-rig {
-        width: 100%;
-        max-width: 100%;
-        padding: 12px 8px 14px;
-        border-radius: 12px;
-        /* Flat on mobile — no 3D */
-        transform: none !important;
-        -webkit-transform: none !important;
+        /* Keep native width, then scale down */
+        width: 600px;
+        flex-shrink: 0;
+        transform-origin: top center;
+        transform: scale(0.59) !important;
+        -webkit-transform: scale(0.59) !important;
+        /* collapse the extra space left by scale */
+        margin-bottom: calc((600px * 0.59 - 600px) * 0.5);
         animation: rig-float-flat 4s ease-in-out infinite !important;
-        /* fake depth with box shadow */
-        box-shadow:
-            0 12px 40px rgba(0,0,0,0.7),
-            0 0 30px rgba(0,240,255,0.1);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.8), 0 0 30px rgba(0,240,255,0.12);
     }
 
     .controller-rig::after { display: none; }
 
     @keyframes rig-float-flat {
-        0%, 100% { transform: none; box-shadow: 0 12px 40px rgba(0,0,0,0.7), 0 0 30px rgba(0,240,255,0.1); }
-        50%       { transform: translateY(-5px) !important; box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 40px rgba(0,240,255,0.15); }
+        0%, 100% { transform: scale(0.59) translateY(0px) !important; }
+        50%       { transform: scale(0.59) translateY(-8px) !important; }
     }
 
-    /* ---- TOP BAR ---- */
-    .rig-topbar {
-        grid-template-columns: 1fr auto;
-        gap: 8px;
-        margin-bottom: 10px;
-        align-items: center;
-    }
-    .rig-led-strip { display: none; }
-
-    .rig-title {
-        grid-column: 1 / -1;
-        text-align: center;
-    }
-    .rig-title .logo-title {
-        font-size: clamp(1.2rem, 6.5vw, 2rem);
-        letter-spacing: 2px;
-        line-height: 1.2;
-        margin-bottom: 4px;
-    }
-    .rig-title .tagline {
-        font-size: clamp(0.45rem, 2vw, 0.6rem);
-        letter-spacing: 2px;
-        margin-bottom: 0;
-    }
-    .rig-visor-wrap {
-        grid-column: 1 / -1;
-    }
-    .rig-visor-wrap .visor-screen {
-        height: 26px;
-        border-radius: 4px;
-    }
-
-    /* ---- RIG BODY ---- */
-    .rig-body {
-        display: flex;
-        width: 100%;
-        gap: 0;
-        align-items: stretch;
-    }
-
-    /* ---- DECKS ---- */
-    .deck {
-        width: 27vw;
-        min-width: 0;
-        padding: 5px 3px 7px;
-        gap: 5px;
-        border-radius: 6px 0 0 3px;
-    }
-    .deck-right { border-radius: 0 6px 3px 0; }
-
-    .deck-screen  { height: 32px; }
-    .deck-bpm     { font-size: 0.38rem; }
-
-    .platter {
-        width: 24vw;
-        height: 24vw;
-        max-width: 100px;
-        max-height: 100px;
-        margin: 0 auto;
-    }
-    .platter-vinyl {
-        width: calc(100% - 8px);
-        height: calc(100% - 8px);
-        top: 4px; left: 4px;
-    }
-    .platter-label {
-        width: 26px; height: 26px;
-        font-size: 0.65rem;
-    }
-
-    .deck-controls { gap: 3px; padding: 0 2px; }
-    .knob-sm       { width: 13px; height: 13px; }
-    .play-pause    { width: 15px; height: 15px; }
-
-    /* ---- MIXER ---- */
-    .mixer {
-        width: 32vw;
-        min-width: 0;
-        padding: 5px 5px 7px;
-        gap: 5px;
-    }
-    .knob-md        { width: 16px; height: 16px; }
-    .knob-lg        { width: 28px; height: 28px; }
-    .fader-track    { height: 50px; width: 5px; }
-    .fader-cap      { width: 12px; height: 7px; }
-    .led            { width: 4px; height: 4px; }
-    .led-row        { gap: 3px; }
-    .mixer-eq       { gap: 3px; }
-    .mixer-btns     { gap: 3px; }
-    .pad            { height: 12px; }
-    .crossfader-cap { width: 14px; height: 8px; }
-    .eq-label       { font-size: 0.4rem; }
-
-    /* ---- BOTTOM STRIP ---- */
+    /* ---- BOTTOM STRIP: outside scale, full width ---- */
     .rig-bottom {
         flex-direction: column;
         align-items: stretch;
         gap: 10px;
-        margin-top: 12px;
+        margin-top: -100px; /* pull up to compensate scale gap */
+        padding: 0 12px;
+        position: relative;
+        z-index: 10;
     }
     .rig-pads { gap: 5px; }
-    .rig-pads .pad { height: 24px; border-radius: 4px; }
+    .rig-pads .pad { height: 26px; border-radius: 4px; }
 
     .rig-cta {
         width: 100%;
@@ -2255,7 +2166,7 @@ body::after {
         padding: 0.9rem 1rem;
         font-size: 0.8rem;
         clip-path: none;
-        border-radius: 4px;
+        border-radius: 6px;
     }
 
     /* ---- ABOUT ---- */
