@@ -240,29 +240,40 @@ document.querySelectorAll('.track-card').forEach(card => {
 });
 
 // ===== DECK WAVEFORMS =====
-['waveLeft', 'waveRight'].forEach((id, idx) => {
-    const c = document.getElementById(id);
-    if (!c) return;
-    const ctx2 = c.getContext('2d');
-    c.width = c.offsetWidth * 2;
-    c.height = c.offsetHeight * 2;
-    let t = idx * 80;
+function initDeckWaveforms() {
+    ['waveLeft', 'waveRight'].forEach((id, idx) => {
+        const c = document.getElementById(id);
+        if (!c) return;
+        const ctx2 = c.getContext('2d');
+        // Use parent size as fallback if offsetWidth is 0
+        const w = c.offsetWidth || c.parentElement?.offsetWidth || 200;
+        const h = c.offsetHeight || c.parentElement?.offsetHeight || 50;
+        c.width = w * 2;
+        c.height = h * 2;
+        let t = idx * 80;
 
-    function drawDeckWave() {
-        ctx2.clearRect(0, 0, c.width, c.height);
-        const bars = 50;
-        const bw = c.width / bars;
-        for (let i = 0; i < bars; i++) {
-            const h = (Math.sin((i + t) * 0.25) * 0.4 + 0.5 + Math.random() * 0.15) * c.height * 0.7;
-            const hue = idx === 0 ? 186 : 300;
-            ctx2.fillStyle = `hsla(${hue}, 100%, 60%, 0.7)`;
-            ctx2.fillRect(i * bw + 1, (c.height - h) / 2, bw - 2, h);
+        function drawDeckWave() {
+            ctx2.clearRect(0, 0, c.width, c.height);
+            const bars = 50;
+            const bw = c.width / bars;
+            for (let i = 0; i < bars; i++) {
+                const h2 = (Math.sin((i + t) * 0.25) * 0.4 + 0.5 + Math.random() * 0.15) * c.height * 0.7;
+                const hue = idx === 0 ? 186 : 300;
+                ctx2.fillStyle = `hsla(${hue}, 100%, 60%, 0.7)`;
+                ctx2.fillRect(i * bw + 1, (c.height - h2) / 2, bw - 2, h2);
+            }
+            t++;
+            requestAnimationFrame(drawDeckWave);
         }
-        t++;
-        requestAnimationFrame(drawDeckWave);
-    }
-    drawDeckWave();
-});
+        drawDeckWave();
+    });
+}
+// Wait for full layout before sizing canvases
+if (document.readyState === 'complete') {
+    initDeckWaveforms();
+} else {
+    window.addEventListener('load', initDeckWaveforms);
+}
 
 // ===== MURAKAMI FLOWERS =====
 function createMurakamiFlower(x, y, size) {
@@ -684,23 +695,21 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
 
 // ===== 3D CONTROLLER TILT ON MOUSE MOVE =====
 const rig = document.querySelector('.controller-rig');
-document.addEventListener('mousemove', (e) => {
-    if (!rig) return;
-    const x = (e.clientX / window.innerWidth - 0.5);   // -0.5 to 0.5
-    const y = (e.clientY / window.innerHeight - 0.5);  // -0.5 to 0.5
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
+if (rig && !isMobile) {
     const baseX = 28;
-    const tiltX = baseX - y * 8;   // tilt forward/back slightly
-    const tiltY = x * 6;           // rotate left/right
+    document.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5);
+        const y = (e.clientY / window.innerHeight - 0.5);
+        const tiltX = baseX - y * 8;
+        const tiltY = x * 6;
+        rig.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+        rig.style.transition = 'transform 0.12s ease-out';
+    });
 
-    rig.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
-    rig.style.transition = 'transform 0.15s ease-out';
-});
-
-// Reset on mouse leave
-document.addEventListener('mouseleave', () => {
-    if (rig) {
-        rig.style.transform = 'rotateX(28deg) rotateY(0deg)';
+    document.addEventListener('mouseleave', () => {
+        rig.style.transform = `rotateX(${baseX}deg) rotateY(0deg)`;
         rig.style.transition = 'transform 0.6s ease';
-    }
-});
+    });
+}
