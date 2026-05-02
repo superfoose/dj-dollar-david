@@ -94,6 +94,7 @@ body {
     justify-content: space-between;
     padding: 1rem 3rem;
     background: rgba(5, 5, 8, 0.85);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid rgba(0, 240, 255, 0.1);
     transition: all 0.3s ease;
@@ -2076,184 +2077,234 @@ body::after {
 }
 
 /* ============================================
-   MOBILE — full overhaul
+   MOBILE / iPHONE — full overhaul
    ============================================ */
 @media (max-width: 768px) {
 
-    /* Basics */
-    body { cursor: auto; }
+    /* ---- basics ---- */
+    body { cursor: auto; overflow-x: hidden; }
     .cursor-glow { display: none; }
 
-    /* ----- NAVBAR ----- */
+    /* Fix iPhone 100vh (includes address bar) */
+    #hero {
+        min-height: 100svh;
+        min-height: -webkit-fill-available;
+        padding: 75px 12px 32px;
+        overflow: visible;
+    }
+
+    /* ---- NAVBAR ---- */
     #navbar {
-        padding: 0.8rem 1.2rem;
+        padding: 0.75rem 1.2rem;
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
     }
     .nav-links { display: none; }
-    .nav-logo {
-        font-size: 1.4rem;
-    }
+    .nav-logo { font-size: 1.3rem; }
 
-    /* ----- HERO ----- */
-    #hero {
-        padding: 80px 8px 40px;
-        min-height: auto;
-    }
-
-    /* Scale the whole 3D rig to fit on phone */
-    .controller-rig-perspective {
-        perspective: 600px;
+    /* ---- HERO CONTENT ---- */
+    .hero-content {
         width: 100%;
+        align-items: center;
+    }
+
+    /* ---- 3D RIG: kill perspective on iPhone Safari
+           (Safari 3D + overflow causes blank renders)
+           Use a simple top shadow to fake depth instead ---- */
+    .controller-rig-perspective {
+        perspective: none !important;
+        overflow: visible;
+        width: 100%;
+        padding-bottom: 0;
     }
 
     .controller-rig {
         width: 100%;
-        padding: 10px 8px 12px;
-        transform: rotateX(16deg) rotateY(0deg) !important;
-        animation: rig-float-mobile 4s ease-in-out infinite !important;
+        max-width: 100%;
+        padding: 12px 8px 14px;
+        border-radius: 12px;
+        /* Flat on mobile — no 3D */
+        transform: none !important;
+        -webkit-transform: none !important;
+        animation: rig-float-flat 4s ease-in-out infinite !important;
+        /* fake depth with box shadow */
+        box-shadow:
+            0 12px 40px rgba(0,0,0,0.7),
+            0 0 30px rgba(0,240,255,0.1);
     }
 
-    @keyframes rig-float-mobile {
-        0%, 100% { transform: rotateX(16deg) translateY(0) !important; }
-        50%       { transform: rotateX(14deg) translateY(-4px) !important; }
+    .controller-rig::after { display: none; }
+
+    @keyframes rig-float-flat {
+        0%, 100% { transform: none; box-shadow: 0 12px 40px rgba(0,0,0,0.7), 0 0 30px rgba(0,240,255,0.1); }
+        50%       { transform: translateY(-5px) !important; box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 40px rgba(0,240,255,0.15); }
     }
 
-    /* Top bar: stack title + visor vertically */
+    /* ---- TOP BAR ---- */
     .rig-topbar {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr auto;
         gap: 8px;
         margin-bottom: 10px;
+        align-items: center;
     }
     .rig-led-strip { display: none; }
+
+    .rig-title {
+        grid-column: 1 / -1;
+        text-align: center;
+    }
     .rig-title .logo-title {
-        font-size: clamp(1.1rem, 7vw, 1.8rem);
+        font-size: clamp(1.2rem, 6.5vw, 2rem);
         letter-spacing: 2px;
+        line-height: 1.2;
+        margin-bottom: 4px;
     }
     .rig-title .tagline {
-        font-size: 0.5rem;
+        font-size: clamp(0.45rem, 2vw, 0.6rem);
         letter-spacing: 2px;
+        margin-bottom: 0;
+    }
+    .rig-visor-wrap {
+        grid-column: 1 / -1;
     }
     .rig-visor-wrap .visor-screen {
-        height: 28px;
+        height: 26px;
+        border-radius: 4px;
     }
 
-    /* Rig body — decks + mixer */
+    /* ---- RIG BODY ---- */
     .rig-body {
-        gap: 0;
+        display: flex;
         width: 100%;
+        gap: 0;
         align-items: stretch;
     }
 
-    /* Shrink decks significantly */
+    /* ---- DECKS ---- */
     .deck {
-        width: clamp(80px, 26vw, 130px);
-        padding: 6px 4px 8px;
-        gap: 6px;
+        width: 27vw;
+        min-width: 0;
+        padding: 5px 3px 7px;
+        gap: 5px;
+        border-radius: 6px 0 0 3px;
     }
+    .deck-right { border-radius: 0 6px 3px 0; }
 
-    .deck-screen { height: 35px; }
-    .deck-bpm { font-size: 0.4rem; }
+    .deck-screen  { height: 32px; }
+    .deck-bpm     { font-size: 0.38rem; }
 
     .platter {
-        width: clamp(70px, 22vw, 110px);
-        height: clamp(70px, 22vw, 110px);
+        width: 24vw;
+        height: 24vw;
+        max-width: 100px;
+        max-height: 100px;
+        margin: 0 auto;
     }
     .platter-vinyl {
-        width: calc(100% - 10px);
-        height: calc(100% - 10px);
+        width: calc(100% - 8px);
+        height: calc(100% - 8px);
+        top: 4px; left: 4px;
     }
     .platter-label {
-        width: 28px;
-        height: 28px;
-        font-size: 0.7rem;
+        width: 26px; height: 26px;
+        font-size: 0.65rem;
     }
 
-    .deck-controls { gap: 4px; padding: 0 2px; }
-    .knob-sm { width: 14px; height: 14px; }
-    .play-pause { width: 16px; height: 16px; }
+    .deck-controls { gap: 3px; padding: 0 2px; }
+    .knob-sm       { width: 13px; height: 13px; }
+    .play-pause    { width: 15px; height: 15px; }
 
-    /* Shrink mixer */
+    /* ---- MIXER ---- */
     .mixer {
-        width: clamp(100px, 30vw, 160px);
-        padding: 6px 6px 8px;
-        gap: 6px;
+        width: 32vw;
+        min-width: 0;
+        padding: 5px 5px 7px;
+        gap: 5px;
     }
-    .knob-md { width: 18px; height: 18px; }
-    .knob-lg { width: 32px; height: 32px; }
-    .fader-track { height: 55px; }
-    .led { width: 5px; height: 5px; }
-    .mixer-eq { gap: 4px; }
-    .mixer-btns { gap: 4px; }
-    .pad { height: 14px; }
-    .crossfader-cap { width: 16px; height: 10px; }
-    .eq-label { font-size: 0.45rem; }
+    .knob-md        { width: 16px; height: 16px; }
+    .knob-lg        { width: 28px; height: 28px; }
+    .fader-track    { height: 50px; width: 5px; }
+    .fader-cap      { width: 12px; height: 7px; }
+    .led            { width: 4px; height: 4px; }
+    .led-row        { gap: 3px; }
+    .mixer-eq       { gap: 3px; }
+    .mixer-btns     { gap: 3px; }
+    .pad            { height: 12px; }
+    .crossfader-cap { width: 14px; height: 8px; }
+    .eq-label       { font-size: 0.4rem; }
 
-    /* Bottom strip */
+    /* ---- BOTTOM STRIP ---- */
     .rig-bottom {
         flex-direction: column;
+        align-items: stretch;
         gap: 10px;
-        margin-top: 10px;
+        margin-top: 12px;
     }
-    .rig-pads { gap: 4px; }
-    .rig-pads .pad { height: 22px; }
+    .rig-pads { gap: 5px; }
+    .rig-pads .pad { height: 24px; border-radius: 4px; }
+
     .rig-cta {
         width: 100%;
         flex-direction: column;
-        gap: 8px;
+        gap: 10px;
     }
     .rig-cta .btn {
         width: 100%;
         text-align: center;
-        padding: 0.8rem 1rem;
-        font-size: 0.75rem;
-    }
-
-    /* ----- ABOUT ----- */
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    .turntable {
-        width: 200px;
-        height: 200px;
-    }
-    .vinyl {
-        width: 180px;
-        height: 180px;
-    }
-    .stats {
         justify-content: center;
-        gap: 1.5rem;
-    }
-    .stat-number { font-size: 1.8rem; }
-
-    /* ----- BOOKING ----- */
-    .booking-phone-number {
-        padding: 1.2rem 1.5rem;
+        padding: 0.9rem 1rem;
+        font-size: 0.8rem;
         clip-path: none;
-        border-radius: 8px;
+        border-radius: 4px;
     }
+
+    /* ---- ABOUT ---- */
+    section { padding: 5rem 0; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+    .turntable { width: 200px; height: 200px; margin: 0 auto; }
+    .vinyl      { width: 185px; height: 185px; }
+
+    .about-text p { font-size: 1.05rem; }
+    .stats        { justify-content: space-around; flex-wrap: wrap; gap: 1rem; }
+    .stat-number  { font-size: 2rem; }
+
+    /* ---- BOOKING ---- */
+    .booking-phone-wrap { gap: 1.5rem; padding: 0 1rem; }
+    .booking-phone-number {
+        padding: 1.4rem 1.8rem;
+        clip-path: none;
+        border-radius: 10px;
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+    }
+    .phone-icon  { font-size: 2rem; }
     .phone-digits {
-        font-size: clamp(1.4rem, 8vw, 2.5rem);
-        letter-spacing: 3px;
+        font-size: clamp(1.6rem, 9vw, 2.8rem);
+        letter-spacing: 2px;
     }
     .booking-whatsapp {
         clip-path: none;
-        border-radius: 8px;
+        border-radius: 10px;
         justify-content: center;
+        padding: 1rem 2rem;
+        font-size: 1rem;
     }
 
-    /* ----- CONTACT ----- */
-    .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-    }
-    .social-link { justify-content: center; }
-    .social-link::before { position: static; }
+    /* ---- CONTACT ---- */
+    .contact-grid          { grid-template-columns: 1fr; gap: 2.5rem; }
+    .social-link           { justify-content: flex-start; gap: 1rem; }
+    .social-link::before   { position: static; font-size: 0.75rem; }
 
-    /* ----- SECTION TITLES ----- */
-    .section-title { font-size: clamp(1.6rem, 8vw, 2.5rem); margin-bottom: 2.5rem; }
-    .section-title::before { font-size: clamp(3rem, 16vw, 6rem); }
+    /* ---- SECTION TITLES ---- */
+    .section-title         { font-size: clamp(1.8rem, 9vw, 2.5rem); margin-bottom: 2rem; }
+    .section-title::before { font-size: clamp(3.5rem, 18vw, 6rem); }
 
-    /* ----- FOOTER ----- */
+    /* ---- FOOTER ---- */
     .footer-logo { font-size: 1rem; letter-spacing: 2px; }
+    footer p     { font-size: 0.75rem; }
+
+    /* ---- PARTICLES: reduce on mobile for perf ---- */
+    #particles { opacity: 0.5; }
 }

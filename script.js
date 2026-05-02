@@ -83,7 +83,8 @@ function createParticle() {
     setTimeout(() => particle.remove(), 12000);
 }
 
-setInterval(createParticle, 300);
+const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+setInterval(createParticle, isMobileDevice ? 800 : 300);
 
 // ===== CUSTOM CURSOR =====
 const cursorGlow = document.getElementById('cursorGlow');
@@ -695,9 +696,7 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
 
 // ===== 3D CONTROLLER TILT ON MOUSE MOVE =====
 const rig = document.querySelector('.controller-rig');
-const isMobile = window.matchMedia('(max-width: 768px)').matches;
-
-if (rig && !isMobile) {
+if (rig && !isMobileDevice) {
     const baseX = 28;
     document.addEventListener('mousemove', (e) => {
         const x = (e.clientX / window.innerWidth - 0.5);
