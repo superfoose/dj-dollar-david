@@ -602,19 +602,59 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ===== FORM HANDLING =====
-document.getElementById('contactForm').addEventListener('submit', (e) => {
+// ===== FORM HANDLING — Formspree =====
+document.getElementById('contactForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = e.target.querySelector('button');
-    btn.querySelector('.btn-text').textContent = 'TRANSMITTED ✓';
-    btn.style.borderColor = '#00ff88';
-    btn.style.color = '#00ff88';
-    setTimeout(() => {
-        btn.querySelector('.btn-text').textContent = 'TRANSMIT';
-        btn.style.borderColor = '';
-        btn.style.color = '';
-        e.target.reset();
-    }, 3000);
+    const form = e.target;
+    const btn = form.querySelector('button[type="submit"]');
+    const btnText = btn.querySelector('.btn-text');
+
+    // Replace YOUR_FORM_ID below with the ID from formspree.io
+    const FORMSPREE_ID = 'YOUR_FORM_ID';
+
+    btnText.textContent = 'SENDING...';
+    btn.disabled = true;
+
+    const data = {
+        name: form.name.value,
+        email: form.email.value,
+        message: form.message.value,
+        _replyto: form.email.value,
+        _subject: 'New message from DJ Dollar David site'
+    };
+
+    try {
+        const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        if (res.ok) {
+            btnText.textContent = 'TRANSMITTED ✓';
+            btn.style.borderColor = '#00ff88';
+            btn.style.color = '#00ff88';
+            form.reset();
+            setTimeout(() => {
+                btnText.textContent = 'TRANSMIT';
+                btn.style.borderColor = '';
+                btn.style.color = '';
+                btn.disabled = false;
+            }, 4000);
+        } else {
+            throw new Error('Failed');
+        }
+    } catch {
+        btnText.textContent = 'ERROR — TRY AGAIN';
+        btn.style.borderColor = '#ff3366';
+        btn.style.color = '#ff3366';
+        btn.disabled = false;
+        setTimeout(() => {
+            btnText.textContent = 'TRANSMIT';
+            btn.style.borderColor = '';
+            btn.style.color = '';
+        }, 3000);
+    }
 });
 
 // ===== PARALLAX ON MOUSE MOVE =====

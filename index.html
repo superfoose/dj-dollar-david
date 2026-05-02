@@ -111,18 +111,21 @@
             <h2 class="section-title" data-text="CONTACT">CONTACT</h2>
             <div class="contact-grid">
                 <form class="contact-form" id="contactForm">
+                    <!-- Formspree hidden email target -->
+                    <input type="hidden" name="_replyto" value="davidlevgabbay@gmail.com">
+                    <input type="hidden" name="_subject" value="New message from DJ Dollar David site">
                     <div class="form-group">
-                        <input type="text" id="name" required>
+                        <input type="text" id="name" name="name" required>
                         <label for="name">YOUR NAME</label>
                         <div class="input-line"></div>
                     </div>
                     <div class="form-group">
-                        <input type="email" id="email" required>
+                        <input type="email" id="email" name="email" required>
                         <label for="email">YOUR EMAIL</label>
                         <div class="input-line"></div>
                     </div>
                     <div class="form-group">
-                        <textarea id="message" rows="4" required></textarea>
+                        <textarea id="message" name="message" rows="4" required></textarea>
                         <label for="message">MESSAGE</label>
                         <div class="input-line"></div>
                     </div>
