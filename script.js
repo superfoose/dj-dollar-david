@@ -239,6 +239,31 @@ document.querySelectorAll('.track-card').forEach(card => {
     card.style.transition = 'all 0.6s ease';
 });
 
+// ===== DECK WAVEFORMS =====
+['waveLeft', 'waveRight'].forEach((id, idx) => {
+    const c = document.getElementById(id);
+    if (!c) return;
+    const ctx2 = c.getContext('2d');
+    c.width = c.offsetWidth * 2;
+    c.height = c.offsetHeight * 2;
+    let t = idx * 80;
+
+    function drawDeckWave() {
+        ctx2.clearRect(0, 0, c.width, c.height);
+        const bars = 50;
+        const bw = c.width / bars;
+        for (let i = 0; i < bars; i++) {
+            const h = (Math.sin((i + t) * 0.25) * 0.4 + 0.5 + Math.random() * 0.15) * c.height * 0.7;
+            const hue = idx === 0 ? 186 : 300;
+            ctx2.fillStyle = `hsla(${hue}, 100%, 60%, 0.7)`;
+            ctx2.fillRect(i * bw + 1, (c.height - h) / 2, bw - 2, h);
+        }
+        t++;
+        requestAnimationFrame(drawDeckWave);
+    }
+    drawDeckWave();
+});
+
 // ===== MURAKAMI FLOWERS =====
 function createMurakamiFlower(x, y, size) {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');

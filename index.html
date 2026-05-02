@@ -26,13 +26,112 @@
 
     <section id="hero">
         <div class="hero-content">
-            <div class="helmet-container">
-                <div class="helmet">
-                    <div class="visor">
-                        <div class="visor-text" id="visorText"></div>
+            <!-- ===== FUTURISTIC DJ SET ===== -->
+            <div class="djset">
+
+                <!-- LEFT DECK -->
+                <div class="deck deck-left">
+                    <div class="deck-screen">
+                        <canvas class="deck-wave" id="waveLeft"></canvas>
+                        <div class="deck-bpm">128 BPM</div>
+                    </div>
+                    <div class="platter">
+                        <div class="platter-vinyl">
+                            <div class="platter-label">
+                                <span>A</span>
+                            </div>
+                        </div>
+                        <div class="platter-ring"></div>
+                    </div>
+                    <div class="deck-controls">
+                        <div class="knob knob-sm"></div>
+                        <div class="knob knob-sm"></div>
+                        <div class="knob knob-sm"></div>
+                        <div class="play-pause active"></div>
                     </div>
                 </div>
+
+                <!-- CENTER MIXER -->
+                <div class="mixer">
+                    <div class="mixer-top">
+                        <div class="visor-screen">
+                            <div class="visor-text" id="visorText"></div>
+                        </div>
+                    </div>
+                    <div class="mixer-eq">
+                        <div class="eq-col">
+                            <div class="knob knob-md"></div>
+                            <div class="knob knob-md"></div>
+                            <div class="knob knob-md"></div>
+                            <span class="eq-label">A</span>
+                        </div>
+                        <div class="eq-col">
+                            <div class="fader-track">
+                                <div class="fader-cap" style="top:20%"></div>
+                            </div>
+                        </div>
+                        <div class="eq-col eq-mid">
+                            <div class="led-row">
+                                <span class="led on"></span><span class="led on"></span>
+                                <span class="led on"></span><span class="led"></span>
+                                <span class="led"></span>
+                            </div>
+                            <div class="knob knob-lg master-knob"></div>
+                            <div class="led-row">
+                                <span class="led on"></span><span class="led on"></span>
+                                <span class="led on"></span><span class="led on"></span>
+                                <span class="led"></span>
+                            </div>
+                        </div>
+                        <div class="eq-col">
+                            <div class="fader-track">
+                                <div class="fader-cap" style="top:50%"></div>
+                            </div>
+                        </div>
+                        <div class="eq-col">
+                            <div class="knob knob-md"></div>
+                            <div class="knob knob-md"></div>
+                            <div class="knob knob-md"></div>
+                            <span class="eq-label">B</span>
+                        </div>
+                    </div>
+                    <div class="crossfader-wrap">
+                        <div class="crossfader-track">
+                            <div class="crossfader-cap"></div>
+                        </div>
+                    </div>
+                    <div class="mixer-btns">
+                        <div class="pad pad-cyan"></div>
+                        <div class="pad pad-magenta"></div>
+                        <div class="pad pad-gold"></div>
+                        <div class="pad pad-cyan"></div>
+                    </div>
+                </div>
+
+                <!-- RIGHT DECK -->
+                <div class="deck deck-right">
+                    <div class="deck-screen">
+                        <canvas class="deck-wave" id="waveRight"></canvas>
+                        <div class="deck-bpm">132 BPM</div>
+                    </div>
+                    <div class="platter">
+                        <div class="platter-vinyl">
+                            <div class="platter-label">
+                                <span>B</span>
+                            </div>
+                        </div>
+                        <div class="platter-ring"></div>
+                    </div>
+                    <div class="deck-controls">
+                        <div class="knob knob-sm"></div>
+                        <div class="knob knob-sm"></div>
+                        <div class="knob knob-sm"></div>
+                        <div class="play-pause"></div>
+                    </div>
+                </div>
+
             </div>
+            <!-- ===== END DJ SET ===== -->
             <h1 class="logo-title">
                 <span class="dollar-d">D</span>J
                 <span class="dollar-d">D</span>OLLAR
@@ -69,7 +168,7 @@
                 </div>
                 <div class="about-text">
                     <p class="reveal-text">Born from the neon-lit underground, <strong>DJ Dollar David</strong> fuses electro, house, and synthwave into an unforgettable sonic experience.</p>
-                    <p class="reveal-text">With a helmet on and bass cranked to eleven, every set is a journey through the digital frontier — where the future sounds like now.</p>
+                    <p class="reveal-text">Armed with the <strong>best equipment in the game</strong> — from top-of-the-line Pioneer decks to a custom rig built for maximum impact — every set is a journey through the digital frontier where the future sounds like now.</p>
                     <div class="stats">
                         <div class="stat" data-count="500">
                             <span class="stat-number">0</span>
